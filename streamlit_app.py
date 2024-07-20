@@ -52,3 +52,9 @@ with st.sidebar:
         options=df["Level"].unique(),
         default=df["Level"].unique()
     )
+
+df_selection = df.query(
+    "Country == @country & Service == @service & Status == @status & Level == @level"
+)
+
+st.dataframe(df_selection)
