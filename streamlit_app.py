@@ -27,8 +27,7 @@ if uploaded_file is None:
 
 df = load_data(uploaded_file)
 
-with st.expander("Data preview"):
-    st.dataframe(df)
+
 
 with st.sidebar:
     st.header("Filter:")
@@ -56,5 +55,6 @@ with st.sidebar:
 df_selection = df.query(
     "Country == @country & Service == @service & Status == @status & Level == @level"
 )
-
-st.dataframe(df_selection)
+with st.expander("Data preview"):
+    st.dataframe(df_selection)
+#st.dataframe(df_selection)
