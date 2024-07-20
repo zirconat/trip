@@ -29,3 +29,11 @@ df = load_data(uploaded_file)
 
 with st.expander("Data preview"):
     st.dataframe(df)
+
+with st.sidebar:
+    st.header("Filter:")
+    country = st.sidebar.multiselect(
+        "Select the country:",
+        options=df["Country"].unique(),
+        default=df["Country"].unique()
+    )
