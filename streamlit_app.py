@@ -14,9 +14,15 @@ st.write(
 )
 
 @st.cache_data
-def load_data(path: str):
-    data = pd.read_excel(path)
+def load_data(file):
+    data = pd.read_excel(file)
     return data
 
-df = load_data("./Trip and visit WY24_25 Database.xlsx")
+uploaded_file = st.file_uploader("Choose a file")
+
+if uploaded_file is None:
+    st.info("Please upload a file to begin", icon="⚠️")
+    st.stop()
+
+df = load_data(uploaded_file)
 st.dataframe(df)
