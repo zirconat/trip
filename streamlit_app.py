@@ -4,7 +4,7 @@ import pandas as pd
 
 st.set_page_config(
     page_title="Trips & Visits",
-    page_icon=":airplane:"
+    page_icon=":airplane:",
     layout="wide"
 )
 
