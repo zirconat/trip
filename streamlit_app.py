@@ -18,11 +18,13 @@ def load_data(file):
     data = pd.read_excel(file)
     return data
 
-uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.sidebar.file_uploader("Choose a file")
 
 if uploaded_file is None:
-    st.info("Please upload a file to begin", icon="⚠️")
+    st.info("Please upload a file through the sidebar to begin", icon="⚠️")
     st.stop()
 
 df = load_data(uploaded_file)
-st.dataframe(df)
+
+with st.expander("Data preview"):
+    st.dataframe(df)
