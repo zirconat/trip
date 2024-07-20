@@ -19,10 +19,10 @@ def load_data(file):
     data = pd.read_excel(file)
     return data
 
-uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.file_uploader("Choose a file to begin")
 
 if uploaded_file is None:
-    st.info("Please upload a file through the sidebar to begin", icon="⚠️")
+    st.info("Please upload a file", icon="⚠️")
     st.stop()
 
 df = load_data(uploaded_file)
