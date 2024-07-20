@@ -37,3 +37,18 @@ with st.sidebar:
         options=df["Country"].unique(),
         default=df["Country"].unique()
     )
+    service = st.sidebar.multiselect(
+        "Select the service:",
+        options=df["Service"].unique(),
+        default=df["Service"].unique()
+    )
+    status = st.sidebar.multiselect(
+        "Select the status:",
+        options=df["Status"].unique(),
+        default=df["Status"].unique()
+    )
+    level = st.sidebar.multiselect(
+        "Select the level:",
+        options=df["Level"].unique(),
+        default=df["Level"].unique()
+    )
