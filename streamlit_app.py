@@ -14,6 +14,8 @@ st.write(
     "Displays trips and visits for WY24/25"
 )
 
+st.Page
+
 @st.cache_data
 def load_data(file):
     data = pd.read_excel(file)
