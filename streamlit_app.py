@@ -32,24 +32,29 @@ st.write(
 # assign excel file
 df = pd.read_excel("./Trip and visit WY24_25 Database.xlsx")
 
-# Data cleaning
-df.dropna(inplace=True), # remove blanks
-df.drop(columns=['Month', 'Year'], axis = 1, inplace=True), #remove month and year reference columns
+# data cleaning
+df.drop(columns=['Month', 'Year'], axis=1, inplace=True) #remove month and year reference columns
+df.dropna(inplace=True) # remove blanks
 
-# enable clickable links in dataframe
-st.data_editor(
-    df,
-    column_config={
-        "Confluence Link": st.column_config.LinkColumn("Confluence Link")
-    },
-    hide_index=True,
-    disabled=True,
-    
-)
-
-
-
-#df
+# hide table in preview
+with st.expander("Data preview"):
+    # edit table config
+    st.data_editor(
+        df,
+        column_config={
+            "Confluence Link": st.column_config.LinkColumn("Confluence Link"), # enable clickable links in dataframe
+            "Departure Date": st.column_config.DateColumn( # change date format
+                "Departure Date",
+                format= "DD MMM YYYY"
+                ),
+            "Return Date": st.column_config.DateColumn( # change date format
+                "Return Date",
+                format= "DD MMM YYYY"
+                ),
+        },
+        hide_index=True, #hide df index
+        disabled=True # disable user editing
+    )
 
 #with st.sidebar:
 #    st.header("Filter:")
@@ -78,5 +83,4 @@ st.data_editor(
 #    "Country == @country & Service == @service & Status == @status & Level == @level"
 #)
 
-#with st.expander("Data preview"):
-#    st.dataframe(df_selection)
+
