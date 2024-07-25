@@ -39,13 +39,15 @@ df = pd.read_excel("./Trip and visit WY24_25 Database.xlsx")
 tab1, tab2, tab3 = st.tabs(["Dashboard", "Tennis Court", "Testing"])
 
 with tab1:
-    df.drop(columns=['Month', 'Year'], axis=1, inplace=True) #remove month and year reference columns
-    df.dropna(inplace=True) # remove blanks
+    df_clean = df
+    df_clean.drop(columns=['Month', 'Year'], axis=1, inplace=True) #remove month and year reference columns
+    df_clean.dropna(inplace=True) # remove blanks
+    
     # hide table in preview
     with st.expander("Data preview"):
         # edit table config
         st.data_editor(
-            df,
+            df_clean,
             column_config={
                 "Confluence Link": st.column_config.LinkColumn("Confluence Link"), # enable clickable links in dataframe
                 "Departure Date": st.column_config.DateColumn( # change date format
