@@ -15,7 +15,6 @@ st.write(
     "An overview of trips and visits for WY2024/2025"
 )
 
-
 #@st.cache_data
 #def load_data(file):
 #    data = pd.read_excel(file)
@@ -33,28 +32,35 @@ st.write(
 df = pd.read_excel("./Trip and visit WY24_25 Database.xlsx")
 
 # data cleaning
-df.drop(columns=['Month', 'Year'], axis=1, inplace=True) #remove month and year reference columns
-df.dropna(inplace=True) # remove blanks
+#df.drop(columns=['Month', 'Year'], axis=1, inplace=True) #remove month and year reference columns
+#df.dropna(inplace=True) # remove blanks
 
-# hide table in preview
-with st.expander("Data preview"):
-    # edit table config
-    st.data_editor(
-        df,
-        column_config={
-            "Confluence Link": st.column_config.LinkColumn("Confluence Link"), # enable clickable links in dataframe
-            "Departure Date": st.column_config.DateColumn( # change date format
-                "Departure Date",
-                format= "DD MMM YYYY"
-                ),
-            "Return Date": st.column_config.DateColumn( # change date format
-                "Return Date",
-                format= "DD MMM YYYY"
-                ),
+# multi tab pages
+tab1, tab2, tab3 = st.tabs(["Dashboard", "Tennis Court", "Testing"])
+
+with tab1:
+    df.drop(columns=['Month', 'Year'], axis=1, inplace=True) #remove month and year reference columns
+    df.dropna(inplace=True) # remove blanks
+    # hide table in preview
+    with st.expander("Data preview"):
+        # edit table config
+        st.data_editor(
+            df,
+            column_config={
+                "Confluence Link": st.column_config.LinkColumn("Confluence Link"), # enable clickable links in dataframe
+                "Departure Date": st.column_config.DateColumn( # change date format
+                    "Departure Date",
+                    format= "DD MMM YYYY"
+                    ),
+                "Return Date": st.column_config.DateColumn( # change date format
+                    "Return Date",
+                    format= "DD MMM YYYY"
+                    ),
         },
         hide_index=True, #hide df index
         disabled=True # disable user editing
     )
+
 
 #with st.sidebar:
 #    st.header("Filter:")
@@ -82,5 +88,3 @@ with st.expander("Data preview"):
 #df_selection = df.query(
 #    "Country == @country & Service == @service & Status == @status & Level == @level"
 #)
-
-
