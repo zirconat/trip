@@ -61,6 +61,8 @@ with tab1:
         disabled=True # disable user editing
     )
 
+with tab2:
+    df
 
 #with st.sidebar:
 #    st.header("Filter:")
