@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 #import random
 import plotly.express as px
-import IPython.display import HTML
+from IPython.display import HTML
 
 st.set_page_config(
     page_title=" Trips & Visits",
@@ -33,7 +33,13 @@ st.write(
 df = pd.read_excel("./Trip and visit WY24_25 Database.xlsx")
 
 # enable clickable links in dataframe
-HTML(df.to_html(render_links=True, escape=False))
+st.data_editor(
+    df,
+    column_config={
+        "Confluence Link": st.column_config.LinkColumn("Confluence Link")
+    },
+    hide_index=True,
+)
 
 # Data cleaning
 df.dropna(inplace=True) # remove blanks
