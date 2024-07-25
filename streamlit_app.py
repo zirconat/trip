@@ -39,13 +39,14 @@ st.data_editor(
         "Confluence Link": st.column_config.LinkColumn("Confluence Link")
     },
     hide_index=True,
+    disabled=True
 )
 
 # Data cleaning
 df.dropna(inplace=True) # remove blanks
 df.drop(columns=['Month', 'Year'], axis = 1, inplace=True) #remove month and year reference columns
 
-df
+#df
 
 #with st.sidebar:
 #    st.header("Filter:")
