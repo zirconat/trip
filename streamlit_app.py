@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 #import random
-import plotly.express as px
+#import plotly.express as px
 from IPython.display import HTML
 
 st.set_page_config(
