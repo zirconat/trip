@@ -3,7 +3,8 @@ import pandas as pd
 #import plotly.express as px
 import altair as alt
 from streamlit_option_menu import option_menu
-import streamlit_shadcn_ui as ui
+#import streamlit_shadcn_ui as ui
+import time
 
 st.set_page_config(
     page_title=" Trips & Visits",
@@ -148,15 +149,44 @@ if selected == "📊 Dashboard":
         working_df['Percentage'] = working_df['count'] / working_total * 100
 
         return working_df
-        
+
+    def main():
+        st.markdown("""
+                <style>
+                .subheader {
+                    text-align: center;
+        }
+        </style>
+        """, unsafe_allow_html=True)    
     with st.expander("Data preview"):
         df_formatted(df)
+    
+    # filter for completed trips/visits
+    completed_df = df[df['Status'] == 'Completed']
+
+    # calculate total and completed trips/visits
+    total_df = len(df)
+    completed_df_count = len(completed_df)
+
+    # Calculate completion rate
+    completion_rate = completed_df_count / total_df * 100
+
+    # display completion rate
+    st.metric(label = "**Overall Status**", value = f"{completion_rate:}% engagements completed")
+    
+    # display progress bar
+    progress_bar = st.progress(0)
+    for i in range(total_df):
+        time.sleep(0.1)
+        progress_bar.progress(i+1)
+    
     
     col = st.columns((1, 1, 1), gap = 'medium')
 
     with col[0]:
+        st.subheader("**Engagement Count**")
         total = df['Del Lead'].count()
-        st.metric(label= "**Total Engagements**", value=total, delta= 150)
+        st.metric(label= "**Total Engagements**", value=total, delta= 100)
         
         # filter for away
         trip_filtered = df[df['Type'] == 'Away']
@@ -180,11 +210,81 @@ if selected == "📊 Dashboard":
             theta = alt.Theta('Percentage:Q', stack = True),
             color = 'Del Lead',
             tooltip = ['Del Lead', 'count']
-        )
-        st.markdown("**Breakdown by Del Lead**")        
+        ).interactive()
+        st.subheader("**Breakdown by Lead**")        
         st.altair_chart(del_chart, use_container_width=True, theme='streamlit')
         
+    with col[2]:
+        st.subheader("**Status**")
+        col21, col22, col23 = st.columns(3)
         
+        with col21:
+            # filter for Completed
+            completed_filtered = df[df['Status'] == 'Completed']
+            if not completed_filtered.empty:
+                completed_total = completed_filtered.groupby(['Status']).size().reset_index(name='count')
+                completed_total = completed_total['count'].iloc[0]
+                st.metric(label="**Completed**", value = completed_total)
+            else:
+                st.metric(label="**Completed**", value = 0)
+            
+            # filter for Cancelled
+            cancelled_filtered = df[df['Status'] == 'Cancelled']
+            if not cancelled_filtered.empty:
+                cancelled_total = cancelled_filtered.groupby(['Status']).size().reset_index(name='count')
+                cancelled_total = cancelled_total['count']
+                st.metric(label="**Cancelled**", value = cancelled_total)
+            else:
+                st.metric(label="**Cancelled**", value = 0)
+
+            # filter for New
+            new_filtered = df[df['Status'] == 'New']
+            if not new_filtered.empty:
+                new_total = new_filtered.groupby(['Status']).size().reset_index(name='count')
+                new_total = new_total['count']
+                st.metric(label="**New**", value = new_total)
+            else:
+                st.metric(label="**New**", value = 0)
+                   
+        with col22:
+            # filter for In progress
+            inpro_filtered = df[df['Status'] == 'In progress']
+            if not inpro_filtered.empty:
+                inpro_total = inpro_filtered.groupby(['Status']).size().reset_index(name='count')
+                inpro_total = inpro_total['count']
+                st.metric(label="**In Progress**", value = inpro_total)
+            else:
+                st.metric(label="**In Progress**", value = 0)
+
+            
+                
+            # filter for Modified
+            modified_filtered = df[df['Status'] == 'Modified']
+            if not modified_filtered.empty:
+                modified_total = modified_filtered.groupby(['Status']).size().reset_index(name='count')
+                modified_total = modified_total['count']
+                st.metric(label="**Modified**", value = modified_total)
+            else:
+                st.metric(label="**Modified**", value = 0)
+
+        with col23:
+            # filter for Scheduled
+            scheduled_filtered = df[df['Status'] == 'Scheduled']
+            if not scheduled_filtered.empty:
+                scheduled_total = scheduled_filtered.groupby(['Status']).size().reset_index(name='count')
+                scheduled_total = scheduled_total['count']
+                st.metric(label="**Scheduled**", value = scheduled_total)
+            else:
+                st.metric(label="**Scheduled**", value=0)
+
+            # filter for Postponed
+            postponed_filtered = df[df['Status'] == 'Postponed']
+            if not postponed_filtered.empty:
+                postponed_total = postponed_filtered.groupby(['Status']).size().reset_index(name='count')
+                postponed_total = postponed_total['count']
+                st.metric(label="**Postponed**", value = postponed_total)
+            else:
+                st.metric(label="**Postponed**", value = 0)
 
     # group data by Year, Month, Del Lead
     group_data1 = df.groupby(['Year','Month', 'Del Lead']).size().reset_index(name='count')
