@@ -157,6 +157,18 @@ if selected == "📊 Dashboard":
     with col[0]:
         total = df['Del Lead'].count()
         st.metric(label= "**Total Engagements**", value=total, delta= 150)
+        
+        # filter for away
+        trip_filtered = df[df['Type'] == 'Away']
+        trip_total = trip_filtered.groupby(['Type']).size().reset_index(name='count')
+        trip_total = trip_total['count']
+        st.metric(label="**Trips (Away)**", value = trip_total)
+
+        # filter for Home
+        visit_filtered = df[df['Type'] == 'Home']
+        visit_total = visit_filtered.groupby(['Type']).size().reset_index(name='count')
+        vist_total = visit_total['count']
+        st.metric(label="**Visits (Home)**", value = vist_total)
 
     with col[1]:
         del_df = df.groupby(['Del Lead']).size().reset_index(name='count')
