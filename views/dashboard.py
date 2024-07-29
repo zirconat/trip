@@ -56,3 +56,8 @@ with st.expander("Data preview"):
         },
     hide_index= True
 )
+    
+# Data prep for charting
+df_cleaned = pd.merge(df_editor, df)
+
+df_cleaned
