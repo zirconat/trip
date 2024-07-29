@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+#import plotly.express as px
 import altair as alt
 from streamlit_option_menu import option_menu
 import streamlit_shadcn_ui as ui
