@@ -3,3 +3,4 @@ openpyxl
 IPython
 altair
 pandas
+streamlit_option_menu
