@@ -1,10 +1,7 @@
 import streamlit as st
 import pandas as pd
-#import plotly.express as px
-import altair as alt
-from streamlit_option_menu import option_menu
-#import streamlit_shadcn_ui as ui
-import time
+#from streamlit_option_menu import option_menu
+
 
 st.set_page_config(
     page_title=" Trips & Visits",
@@ -13,9 +10,7 @@ st.set_page_config(
 )
 
 st.title(" ✈️ Trips & Visits Overview")
-st.write(
-    "An overview of trips and visits for WY2024/2025"
-)
+st.write("An overview of trips and visits for WY2024/2025")
 
 # Page setup
 dashboard_page = st.Page(

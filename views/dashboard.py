@@ -258,11 +258,13 @@ month_order = ['January', 'February', 'March', 'April', 'May', 'June',
 # custom filter for chart
 del_filter = alt.selection_multi(fields=['Del Lead'])
         
-# using altair
-chart = alt.Chart(df).mark_bar().encode(
+# Create chart using altair
+chart = alt.Chart(df).mark_bar().properties(
+    width = 400,
+    ).encode(
     opacity = alt.condition(del_filter, alt.value(1), alt.value(0.2)),
     x=alt.X('Month:O', title=" ", sort=month_order),
-    y=alt.Y('count()', title='No. of Trips & Visits'),
+    y=alt.Y('count()', title='No. of Engagements'),
     color='Del Lead',
     tooltip=['Del Lead', 'Type', 'count()'],
 ).add_params(
@@ -277,7 +279,7 @@ chart = alt.Chart(df).mark_bar().encode(
 ).interactive()
     
 #display chart
-st.altair_chart(chart)
+st.altair_chart(chart, use_container_width=True)
 
 # display bb stats
 bb_chart = alt.Chart(bb_stats(df)).mark_arc(outerRadius=80, innerRadius=60).encode(
