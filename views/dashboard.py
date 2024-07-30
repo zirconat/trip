@@ -117,7 +117,8 @@ def main():
     }
     </style>
     """, unsafe_allow_html=True)    
-    
+
+st.subheader("📊 Dashboard")    
 with st.expander("Data preview"):
     df_formatted(df)
     
@@ -140,24 +141,28 @@ for i in range(total_df):
     time.sleep(0.1)
     progress_bar.progress(i+1)
     
-col = st.columns((1, 1, 1), gap = 'medium')
+col = st.columns((1, 2, 1), gap = 'medium')
 
 with col[0]:
     st.subheader("**Engagement Count**")
-    total = df['Del Lead'].count()
-    st.metric(label= "**Total Engagements**", value=total, delta= 100)
+    col01, col02 = st.columns(2)
+           
+    with col01:
+        total = df['Del Lead'].count()
+        st.metric(label= "**Total Engagements**", value=total, delta= 100) 
         
-    # filter for away
-    trip_filtered = df[df['Type'] == 'Away']
-    trip_total = trip_filtered.groupby(['Type']).size().reset_index(name='count')
-    trip_total = trip_total['count']
-    st.metric(label="**Trips (Away)**", value = trip_total)
+    with col02:
+        # filter for Home
+        visit_filtered = df[df['Type'] == 'Home']
+        visit_total = visit_filtered.groupby(['Type']).size().reset_index(name='count')
+        vist_total = visit_total['count']
+        st.metric(label="**Visits (Home)**", value = vist_total)
 
-    # filter for Home
-    visit_filtered = df[df['Type'] == 'Home']
-    visit_total = visit_filtered.groupby(['Type']).size().reset_index(name='count')
-    vist_total = visit_total['count']
-    st.metric(label="**Visits (Home)**", value = vist_total)
+        # filter for away
+        trip_filtered = df[df['Type'] == 'Away']
+        trip_total = trip_filtered.groupby(['Type']).size().reset_index(name='count')
+        trip_total = trip_total['count']
+        st.metric(label="**Trips (Away)**", value = trip_total)
 
 with col[1]:
     del_df = df.groupby(['Del Lead']).size().reset_index(name='count')
@@ -272,7 +277,7 @@ chart = alt.Chart(df).mark_bar().encode(
 ).interactive()
     
 #display chart
-st.altair_chart(chart, use_container_width=True)
+st.altair_chart(chart)
 
 # display bb stats
 bb_chart = alt.Chart(bb_stats(df)).mark_arc(outerRadius=80, innerRadius=60).encode(
