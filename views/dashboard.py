@@ -279,8 +279,7 @@ chart = alt.Chart(df).mark_bar().properties(
 ).interactive()
     
 #display chart
-st.altair_chart(chart, use_container_width=True)
-
+st.altair_chart(chart)
 # display bb stats
 bb_chart = alt.Chart(bb_stats(df)).mark_arc(outerRadius=80, innerRadius=60).encode(
     theta = alt.Theta('Percentage:Q', stack = True),
